@@ -15,7 +15,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate: ");
+
         setContentView(R.layout.activity_main);
+
+        /*add for get data*/
+        if(savedInstanceState != null){
+            String tempData = savedInstanceState.getString("data_key");
+            Log.d(TAG, "get data:" + tempData);
+        }
 
         Button startNormalActivity = (Button) findViewById(R.id.start_normal_activity);
         Button startDialogActivity = (Button) findViewById(R.id.start_dialog_activity);
@@ -24,6 +31,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this,NormalActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("name","wenyiYin");
+                bundle.putInt("age",16);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
@@ -35,6 +46,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    /*add for save data*/
+    @Override
+    protected void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+        String tempData = "Something you just typed";
+        outState.putString("data_key",tempData);
     }
 
     @Override
